@@ -1,0 +1,103 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Step 2: Complete Signup</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                <!-- OTP -->
+                <div class="mb-3">
+                    <label for="otp" class="form-label">Enter OTP</label>
+                    <input type="text" name="otp" id="otp" class="form-control" required pattern="\d{6}" maxlength="6" placeholder="Enter 6-digit OTP">
+                    <div class="form-text text-muted">Check your email for the OTP.</div>
+                </div>
+
+                <!-- First Name -->
+                <div class="mb-3">
+                    <label class="form-label">First Name</label>
+                    {{ user_form.first_name|add_class:"form-control" }}
+                    {% for error in user_form.first_name.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Last Name -->
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    {{ user_form.last_name|add_class:"form-control" }}
+                    {% for error in user_form.last_name.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Email (readonly) -->
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="{{ request.session.temp_email }}" readonly>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    {{ user_form.password1|add_class:"form-control" }}
+                    {% for error in user_form.password1.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    {{ user_form.password2|add_class:"form-control" }}
+                    {% for error in user_form.password2.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Profile Picture -->
+                <div class="mb-3">
+                    <label class="form-label">Profile Picture</label>
+                    {{ profile_form.profile_image|add_class:"form-control" }}
+                    {% for error in profile_form.profile_image.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Address -->
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    {{ profile_form.address|add_class:"form-control" }}
+                    {% for error in profile_form.address.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success px-4">Create Account</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <form method="get" action="{% url 'resend_otp' %}">
+                    <button type="submit" class="btn btn-link">Resend OTP</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

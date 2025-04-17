@@ -1,0 +1,53 @@
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Login</h2>
+
+  <!-- Social Login Buttons -->
+  <div class="mb-4 text-center">
+    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger me-2">
+      <i class="fab fa-google"></i> Login with Google
+    </a>
+    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">
+      <i class="fab fa-facebook-f"></i> Login with Facebook
+    </a>
+  </div>
+
+  <!-- Traditional Login Form -->
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+      {% if form.username.errors %}
+        <div class="text-danger">{{ form.username.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password.label_tag }}
+      {{ form.password }}
+      {% if form.password.errors %}
+        <div class="text-danger">{{ form.password.errors }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+
+  <!-- Password Reset Link -->
+  <br>
+  <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+
+  <!-- Signup Link -->
+  <br>
+  {% if next %}
+    <p>If you don't have an account, you can
+       <a href="{% url 'signup' %}?next={{ next }}">sign up here</a>.</p>
+  {% else %}
+    <p>If you don't have an account, you can
+       <a href="{% url 'signup' %}">sign up here</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

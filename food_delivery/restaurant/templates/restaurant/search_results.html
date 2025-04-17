@@ -1,0 +1,26 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Search Section -->
+    <div class="container py-5">
+        <h2 class="text-center mb-5">🍽️ Search Results for: "{{ query }}"</h2>
+
+        <div class="row">
+            {% for item in results %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p>{{ item.description }}</p>
+                            <a href="#" class="btn btn-outline-primary mt-3">View Item</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+{%endblock%}

@@ -1,0 +1,54 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-center mb-4">Sign Up - Step 1: Email Verification</h2>
+
+  <!-- Social Signup -->
+  <div class="text-center mb-4">
+    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger me-2">
+      <i class="fab fa-google"></i> Sign up with Google
+    </a>
+    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">
+      <i class="fab fa-facebook-f"></i> Sign up with Facebook
+    </a>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="text" name="phone" id="phone" class="form-control" 
+                 placeholder="Enter your 10-digit phone number" 
+                 required pattern="\d{10}" maxlength="10" autofocus>
+          <div class="form-text text-muted">Use a valid 10-digit number without spaces or dashes.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" name="email" id="email" class="form-control" 
+                 placeholder="Enter your email address" required>
+          <div class="form-text text-muted">We'll send a one-time OTP to your email for verification.</div>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary px-4">Send OTP</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

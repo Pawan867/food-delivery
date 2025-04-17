@@ -1,0 +1,78 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-center mb-5">🍽️ Menu for {{ vendor.name }}</h2>
+
+  <div class="row">
+    {% if vendor.food_items.count == 0 %}
+      <p class="text-center">No items available for this vendor.</p>
+    {% else %}
+      {% for item in foods %}
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 d-flex flex-column">
+          <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 180px; object-fit: cover;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <p class="card-text">{{ item.description|truncatewords:15 }}</p>
+
+            <!-- Rating -->
+            <div class="d-flex align-items-center mb-2">
+              <div class="rating">
+                {% for i in item.rating|to_range %}
+                  <span class="text-warning">★</span>
+                {% endfor %}
+                {% for i in 5|add:"-{{ item.rating }}"|to_range %}
+                  <span class="text-muted">★</span>
+                {% endfor %}
+              </div>
+              <small class="ms-2">{{ item.rating }} / 5</small>
+            </div>
+
+            <p class="fw-bold text-success mb-2">Rs. {{ item.price }}</p>
+
+            <!-- Add to Cart -->
+            <form method="POST" action="{% url 'add_to_cart' item.id %}" class="mt-auto">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{% url 'vendor_food_items' vendor.id %}">
+              <button type="submit" class="btn btn-outline-primary w-100">
+                <i class="bi bi-cart-plus"></i> Add to Cart
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- Pagination -->
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if foods.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ foods.previous_page_number }}">Previous</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+      {% endif %}
+
+      {% for num in foods.paginator.page_range %}
+        <li class="page-item {% if foods.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+      {% endfor %}
+
+      {% if foods.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ foods.next_page_number }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endblock %}

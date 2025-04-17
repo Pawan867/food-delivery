@@ -1,0 +1,13 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="alert alert-success">
+        <h2 class="mb-3">Signup Successful! 🎉</h2>
+        <p class="lead">Welcome to our food delivery platform.</p>
+        <p>You can now log in and start ordering your favorite meals.</p>
+        <a href="{% url 'login' %}" class="btn btn-primary mt-3">Go to Login</a>
+    </div>
+</div>
+{% endblock %}

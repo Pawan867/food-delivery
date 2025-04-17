@@ -1,0 +1,155 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Your Profile</h2>
+
+    <div class="row">
+        <!-- Profile Update Form -->
+        <div class="col-md-5">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <strong>Edit Profile</strong>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            {{ profile_form.username }}
+                            {% if profile_form.username.errors %}
+                                <div class="text-danger">{{ profile_form.username.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            {{ profile_form.email }}
+                            {% if profile_form.email.errors %}
+                                <div class="text-danger">{{ profile_form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            {{ profile_form.phone }}
+                            {% if profile_form.phone.errors %}
+                                <div class="text-danger">{{ profile_form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            {{ profile_form.address }}
+                            {% if profile_form.address.errors %}
+                                <div class="text-danger">{{ profile_form.address.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Profile Picture -->
+                        <div class="mb-3">
+                            <label class="form-label">Change Profile Picture</label>
+                            {{ profile_form.profile_image }}
+                            {% if profile_form.profile_image.errors %}
+                                <div class="text-danger">{{ profile_form.profile_image.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Current Profile Picture -->
+                        {% if profile.profile_image %}
+                            <div class="mb-3 text-center">
+                                <img src="{{ profile.profile_image.url }}" alt="Profile Image" class="img-thumbnail rounded-circle" width="120">
+                            </div>
+                        {% endif %}
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success w-100">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Data Summary -->
+        <div class="col-md-7">
+            <!-- Order History -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">Order History</div>
+                <div class="card-body">
+                    {% if orders %}
+                        <ul class="list-group">
+                            {% for order in orders %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Order #{{ order.id }} - Rs. {{ order.total }}</span>
+                                    <span class="badge 
+                                        {% if order.status == 'Delivered' %}bg-success
+                                        {% elif order.status == 'Pending' %}bg-warning
+                                        {% elif order.status == 'Cancelled' %}bg-danger
+                                        {% else %}bg-secondary
+                                        {% endif %}">
+                                        {{ order.status }}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No orders found.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Cancelled Orders -->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">Cancelled Orders</div>
+                <div class="card-body">
+                    {% if cancelled_orders %}
+                        <ul class="list-group">
+                            {% for order in cancelled_orders %}
+                                <li class="list-group-item">Order #{{ order.id }} - Cancelled</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No cancelled orders.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">Transaction History</div>
+                <div class="card-body">
+                    {% if transactions %}
+                        <ul class="list-group">
+                            {% for transaction in transactions %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ transaction.description }}</strong><br>
+                                        <small class="text-muted">{{ transaction.timestamp|date:"d M Y, h:i A" }}</small>
+                                    </div>
+                                    <span class="fw-bold">
+                                        Rs. {{ transaction.amount }} 
+                                        <small class="text-muted">({{ transaction.payment_method }})</small>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No transaction records.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Logout Button -->
+            <div class="text-end">
+                <a href="{% url 'logout' %}" class="btn btn-outline-dark">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
