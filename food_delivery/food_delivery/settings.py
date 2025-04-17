@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from decouple import config
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent

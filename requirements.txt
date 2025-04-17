@@ -6,13 +6,16 @@ charset-normalizer==3.4.1
 cryptography==44.0.2
 defusedxml==0.7.1
 Django==5.2
+gunicorn==23.0.0
 idna==3.10
 oauthlib==3.2.2
+packaging==24.2
 pillow==11.1.0
 pycodestyle==2.13.0
 pycparser==2.22
 PyJWT==2.10.1
 python-decouple==3.8
+python-dotenv==1.1.0
 python-social-auth==0.3.6
 python3-openid==3.2.0
 requests==2.32.3
