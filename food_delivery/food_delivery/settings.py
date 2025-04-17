@@ -22,8 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*!$=7%-=d1ix6dnv)k^5m+*(#6_!ub20#n=+e8fhvd=f9oj9vk'
 DEBUG = True
 # ALLOWED_HOSTS = ['.railway.app']
-ALLOWED_HOSTS = ['food-delivery.railway.internal',
-                 'your-subdomain.up.railway.app']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'food-delivery.railway.internal',  # keep this if you're deploying to Railway
+    'your-subdomain.up.railway.app', ]  # optional: Railway's actual public domain
 
 
 # Installed Apps
