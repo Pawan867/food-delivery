@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UserProfileForm
 from django.contrib.auth import login, logout
-from .forms import LoginForm  # LoginForm import गर्न
+from .forms import LoginForm  # LoginForm import 
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.paginator import Paginator
 import random
