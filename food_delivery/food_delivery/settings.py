@@ -21,19 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Secret Key & Debug
 SECRET_KEY = 'django-insecure-*!$=7%-=d1ix6dnv)k^5m+*(#6_!ub20#n=+e8fhvd=f9oj9vk'
 DEBUG = False
-ALLOWED_HOSTS = ['www.jndigitalworld.com',
-                 'jndigitalworld.com', 'food-delivery-dh8b.onrender.com']
-
-
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://jndigitalworld.com',
-#     'https://www.jndigitalworld.com'
-# ]
-# ALLOWED_HOSTS = [
-#     '127.0.0.1',
-#     'localhost',
-#     'food-delivery.railway.internal',
-#     'your-subdomain.up.railway.app', ]
+ALLOWED_HOSTS = [
+    'food-delivery-dh8b.onrender.com',
+    'www.jndigitalworld.com',
+    'jndigitalworld.com',
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://food-delivery-dh8b.onrender.com',
+    'https://www.jndigitalworld.com',
+    'https://jndigitalworld.com',
+]
 
 
 # Installed Apps
