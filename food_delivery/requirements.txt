@@ -6,7 +6,7 @@ charset-normalizer==3.4.1
 cryptography==44.0.2
 defusedxml==0.7.1
 Django==5.2
-gunicorn==23.0.0
+gunicorn
 idna==3.10
 oauthlib==3.2.2
 packaging==24.2
@@ -33,3 +33,4 @@ whitenoise
 dj-database-url
 psycopg2-binary
 social-auth-app-django
+psycopg2-binary

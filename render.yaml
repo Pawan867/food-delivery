@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: food-delivery
+    runtime: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn food_delivery.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: food_delivery.settings
+      - key: DATABASE_URL
+        value: your_postgres_url
+      - key: SECRET_KEY
+        value: your_django_secret_key
+      - key: ALLOWED_HOSTS
+        value: food-delivery.onrender.com
+      - key: DEBUG
+        value: 'False'
